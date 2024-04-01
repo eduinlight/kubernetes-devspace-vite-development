@@ -1,0 +1,59 @@
+version: v2beta1
+name: app
+
+commands:
+  migrate-db:
+    command: |-
+      echo 'This is a cross-platform, shared command that can be used to codify any kind of dev task.'
+      echo 'Anyone using this project can invoke it via "devspace run migrate-db"'
+
+deployments:
+  app:
+    kubectl:
+      manifests:
+        - ./k8s
+      kustomize: true
+
+dev:
+  app:
+    imageSelector: app
+    logs:
+      enabled: true
+    ports:
+      - port: 3000
+    open:
+      - url: http://localhost:3000
+    sync:
+      - path: ./
+        excludePaths:
+          - "node_modules"
+          - "dist"
+        uploadExcludePaths:
+          - "node_modules"
+          - "dist"
+
+images:
+  app:
+    image: app
+    tags:
+      - latest
+      # - dev-${devspace.git.commit}
+    dockerfile: ./Dockerfile
+    context: ./
+    rebuildStrategy: always
+    skipPush: true
+
+pipelines:
+  deploy:
+    run: |-
+      run_dependencies --all
+      ensure_pull_secrets --all
+      build_images --all -t $(git describe --always)
+      create_deployments --all
+  dev:
+    run: |-
+      run_dependencies --all
+      ensure_pull_secrets --all
+      build_images --all -t $(git describe --always)
+      create_deployments --all
+      start_dev --all
