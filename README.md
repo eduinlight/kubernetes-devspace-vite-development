@@ -7,6 +7,7 @@ This project is an example of using devspace for react development in a kubernet
 - [Docker](https://www.docker.com/)
 - [kubernetes](https://kubernetes.io/)
 - [kubens](https://github.com/ahmetb/kubectx/blob/master/kubens)
+- [kustomize](https://kustomize.io/)
 - [K3D](https://k3d.io/)
 - [Devspace](https://www.devspace.sh/)
 
