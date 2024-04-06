@@ -11,10 +11,12 @@ vars:
     source: env
 
 commands:
-  migrate-db:
+  k3d:
     command: |-
-      echo 'This is a cross-platform, shared command that can be used to codify any kind of dev task.'
-      echo 'Anyone using this project can invoke it via "devspace run migrate-db"'
+      k3d cluster create || true
+      kubectl create namespace app || true
+      kubens app
+      devspace use namespace app
 
 deployments:
   app:
@@ -34,12 +36,6 @@ dev:
       - url: http://localhost:3000
     sync:
       - path: ./:/home/user/app
-        # excludePaths:
-        #   - "node_modules"
-        #   - "dist"
-        # uploadExcludePaths:
-        #   - "node_modules"
-        #   - "dist"
 
 images:
   app:

@@ -30,7 +30,6 @@ RUN if [ $(getent group $GID) ]; then groupdel -f `getent group $GID | cut -d: -
   && groupadd -r user -g $GID \
   && useradd -d /home/user -u $UID -m -s /bin/bash -g user user
 
-
 WORKDIR /home/user/app
 
 COPY . .
