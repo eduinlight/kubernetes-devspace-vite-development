@@ -1,6 +1,15 @@
 version: v2beta1
 name: app
 
+vars:
+  NODE_VERSION:
+    source: env
+    default: "20.10.0"
+  GID:
+    source: env
+  UID:
+    source: env
+
 commands:
   migrate-db:
     command: |-
@@ -20,26 +29,30 @@ dev:
     logs:
       enabled: true
     ports:
-      - port: 3000
+    - port: 3000:3000
     open:
       - url: http://localhost:3000
     sync:
-      - path: ./
-        excludePaths:
-          - "node_modules"
-          - "dist"
-        uploadExcludePaths:
-          - "node_modules"
-          - "dist"
+      - path: ./:/home/user/app
+        # excludePaths:
+        #   - "node_modules"
+        #   - "dist"
+        # uploadExcludePaths:
+        #   - "node_modules"
+        #   - "dist"
 
 images:
   app:
     image: app
+    buildArgs:
+      NODE_VERSION: "20.10"
+      GID: ${GID}
+      UID: ${UID}
+    dockerfile: ./Dockerfile
+    context: ./
     tags:
       - latest
       # - dev-${devspace.git.commit}
-    dockerfile: ./Dockerfile
-    context: ./
     rebuildStrategy: always
     skipPush: true
 
