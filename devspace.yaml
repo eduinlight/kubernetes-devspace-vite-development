@@ -42,8 +42,6 @@ images:
     image: app
     buildArgs:
       NODE_VERSION: "20.10"
-      GID: ${GID}
-      UID: ${UID}
     dockerfile: ./Dockerfile
     context: ./
     tags:
