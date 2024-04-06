@@ -1,26 +1,7 @@
 ## DEVELOPMENT
 # IMAGE
 ARG NODE_VERSION
-FROM node:${NODE_VERSION} AS node-dev
-
-# RUN apt-get update && \
-#     apt-get install -yq \
-#       # NODE SOME PACKAGES DEPENDENCIES
-#       python3 \
-#       build-essential \
-#       # FOR CYPRESS
-#       libgtk2.0-0 \
-#       libgtk-3-0 \
-#       libgbm-dev \
-#       libnotify-dev \
-#       libgconf-2-4 \
-#       libnss3 \
-#       libxss1 \
-#       libasound2 \
-#       libxtst6 \
-#       xauth \
-#       xvfb && \
-#     apt-get clean
+FROM node:${NODE_VERSION}
 
 # CONTAINER USER CONFIGURATION
 ARG UID 
