@@ -34,8 +34,12 @@ dev:
     - port: 3000:3000
     open:
       - url: http://localhost:3000
+    command: ["bash", "-c", "yarn && yarn dev"]
     sync:
       - path: ./:/home/user/app
+        startContainer: true
+        initialSync: mirrorLocal
+        waitInitialSync: true
 
 images:
   app:
@@ -44,10 +48,10 @@ images:
       NODE_VERSION: "20.10"
     dockerfile: ./Dockerfile
     context: ./
+    target: dev
     tags:
       - latest
-      # - dev-${devspace.git.commit}
-    rebuildStrategy: always
+    rebuildStrategy: default 
     skipPush: true
 
 pipelines:
